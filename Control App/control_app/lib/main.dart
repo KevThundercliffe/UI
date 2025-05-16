@@ -7,116 +7,374 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => Home(),
+        '/electronics': (context) => Electronic(),
+        '/electroniccontrol': (context) => ElectronicControl(),
+        '/support': (context) => Support(),
+        '/energy': (context) => Energy(),
+      }
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class Home extends StatefulWidget{
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _homeState createState() => _homeState();
 }
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+class _homeState extends State<Home> {
+    bool toggle = false;
+    @override
+    
+    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        backgroundColor: const Color.fromARGB(255, 18, 79, 129),
+        toolbarHeight: 100,
+        title: Center( child : Image.asset("assets/images/Logo.png", fit: BoxFit.cover),) 
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(255, 18, 79, 129),
+        height: 120,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(onPressed: () {
+            Navigator.pushReplacementNamed(context, '/support');
+          },
+           child: Text("Support", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {
+            Navigator.pushReplacementNamed(context, '/energy');
+          },
+            child: Text("Energy Use", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {},
+            child: Text("Log Out", style: TextStyle(fontSize: 22, color: Colors.white))),
+        ])
+       
+      ),
+      backgroundColor: Color.fromARGB(255, 42, 47, 78),
+      body: Center(child: IconButton(onPressed: () {
+        setState(() {toggle = true;});
+        Navigator.pushReplacementNamed(context, '/electronics');
+      },
+      icon: Image.asset(toggle ? "assets/images/ButtonOn.png" : "assets/images/ButtonOff.png"),))
+    );
+  }
+}
+
+class Electronic extends StatefulWidget{
+  @override
+  _electroState createState() => _electroState();
+}
+class _electroState extends State<Electronic> {
+    @override
+    Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 18, 79, 129),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: IconButton(onPressed: () {
+          Navigator.pushReplacementNamed(context, '/home');
+        }, icon: Image.asset("assets/images/Logo.png"),)
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(255, 18, 79, 129),
+        height: 120,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(onPressed: () {
+            Navigator.pushReplacementNamed(context, '/support');
+          },
+           child: Text("Support", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {
+            Navigator.pushReplacementNamed(context, '/energy');
+          },
+            child: Text("Energy Use", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {},
+            child: Text("Log Out", style: TextStyle(fontSize: 22, color: Colors.white))),
+        ])
+      ),
+            backgroundColor: Color.fromARGB(255, 42, 47, 78),
+            body: Align(
+              alignment: Alignment.topLeft,
+              child:
+              InkWell(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/electroniccontrol');
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                width: 250,
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: 
+                 Text(
+                    "Light 1",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  )
+                )
+              )
             ),
-          ],
+            floatingActionButton: Transform.translate(offset: Offset(12, -35),
+            child: FloatingActionButton(
+              onPressed:(){
+
+              },
+               child: Icon(Icons.add),
+               ),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+    );
+  }
+}
+
+class ElectronicControl extends StatefulWidget{
+  @override
+  _electrocontrolState createState() => _electrocontrolState();
+}
+class _electrocontrolState extends State<ElectronicControl> {
+    int light = 0; 
+    @override
+    Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 18, 79, 129),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: IconButton(onPressed: () {
+          Navigator.pushReplacementNamed(context, '/home');
+        }, icon: Image.asset("assets/images/Logo.png"),)
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(255, 18, 79, 129),
+        height: 120,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(onPressed: () {
+              Navigator.pushReplacementNamed(context, '/support');
+          },
+           child: Text("Support", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {
+            Navigator.pushReplacementNamed(context, '/energy');
+          },
+            child: Text("Energy Use", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {},
+            child: Text("Log Out", style: TextStyle(fontSize: 22, color: Colors.white))),
+        ])
+      ),
+            backgroundColor: Color.fromARGB(255, 42, 47, 78),
+            body: Padding(
+            padding: const EdgeInsets.all(24.0),
+           child: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           children: [
+           InkWell(
+           onTap: () {},
+           borderRadius: BorderRadius.circular(8),
+           child: Container(
+           width: 250,
+           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+           decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 19, 60, 94),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            "Light 1",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      SizedBox(height: 40),
+      Text(
+        "Brightness: $light%",
+        style: TextStyle(color: Colors.white, fontSize: 20),
+      ),
+      Slider(
+        value: light.toDouble(),
+        min: 0,
+        max: 100,
+        divisions: 100,
+        label: "$light",
+        activeColor: Colors.blueAccent,
+        inactiveColor: Colors.white24,
+        onChanged: (double value) {
+          setState(() {
+            light = value.toInt();
+          });
+        },
+      ),
+    ],
+  ),
+),
+    );
+  }
+}
+
+class Support extends StatefulWidget{
+  @override
+  _supportState createState() => _supportState();
+}
+class _supportState extends State<Support> {
+    @override
+    Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 18, 79, 129),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: IconButton(onPressed: () {
+          Navigator.pushReplacementNamed(context, '/home');
+        }, icon: Image.asset("assets/images/Logo.png"),)
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(255, 18, 79, 129),
+        height: 120,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(onPressed: () {},
+           child: Text("Support", style: TextStyle(fontSize: 22, color: Colors.grey))),
+
+          TextButton(onPressed: () {
+            Navigator.pushReplacementNamed(context, '/energy');
+          },
+            child: Text("Energy Use", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {},
+            child: Text("Log Out", style: TextStyle(fontSize: 22, color: Colors.white))),
+        ])
+      ),
+           backgroundColor: Color.fromARGB(255, 42, 47, 78),
+           body: Padding(
+  padding: const EdgeInsets.all(16.0),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        "Phone Number",
+        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      Container(
+        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text(
+          "07930434903",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+      ),
+      Text(
+        "Email",
+        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text(
+          "Support@email.co.uk",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+      ),
+    ],
+  ),
+),
+    );
+  }
+}
+
+class Energy extends StatefulWidget{
+  @override
+  _energyState createState() => _energyState();
+}
+class _energyState extends State<Energy> {
+    @override
+    Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 18, 79, 129),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: IconButton(onPressed: () {
+          Navigator.pushReplacementNamed(context, '/home');
+        }, icon: Image.asset("assets/images/Logo.png"),)
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(255, 18, 79, 129),
+        height: 120,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(onPressed: () {
+            Navigator.pushReplacementNamed(context, '/support');
+          },
+           child: Text("Support", style: TextStyle(fontSize: 22, color: Colors.white))),
+
+          TextButton(onPressed: () {},
+            child: Text("Energy Use", style: TextStyle(fontSize: 22, color: Colors.grey))),
+
+          TextButton(onPressed: () {},
+            child: Text("Log Out", style: TextStyle(fontSize: 22, color: Colors.white))),
+        ])
+      ),
+           backgroundColor: Color.fromARGB(255, 42, 47, 78),
+           body: Padding(
+  padding: const EdgeInsets.all(16.0),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Center(child: 
+      Text(
+        "Cost",
+        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      )),
+      Container(
+        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(child: Text(
+          "£100",
+          style: TextStyle(color: Colors.white, fontSize: 25),
+        )),
+      ),
+      Center(child: 
+      Text(
+        "Energy Use",
+        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      )),
+      Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(child: Text(
+          "72W",
+          style: TextStyle(color: Colors.white, fontSize: 25),
+        )),
+      ),
+    ],
+  ),
+),
     );
   }
 }
